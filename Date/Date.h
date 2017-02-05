@@ -1,3 +1,6 @@
+#ifndef __Class_Date
+#define __Class_Date
+
 #include <iostream>
 #include <string>
 
@@ -15,9 +18,14 @@ class Date {
   int day() const { return d; };
 
   Date preceding_day() const;
+
+  int day_of_week() const;
+  
   std::string to_string() const;
   
 };
 
 std::ostream& operator<<(std::ostream& s, const Date& x);
 std::istream& operator>>(std::istream& s, Date& x);
+
+#endif

@@ -20,6 +20,7 @@ Date::Date() {
   m = local->tm_mon + 1;
   d = local->tm_mday;
 }
+  
 
 Date Date::preceding_day() const {
   int dmax[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -53,4 +54,14 @@ istream& operator>>(istream& s, Date& x) {
   s >> y >> m >> d;
   x = Date(y, m, d);
   return s;
+}
+
+int Date::day_of_week() const {
+  int yy = y;
+  int mm = m;
+  if (mm == 1 || mm == 2) {
+    yy--;
+    mm += 12;
+  }
+  return (yy + yy/4 - yy/100 + yy/400 + (13*mm + 8)/5 + d) % 7;
 }
