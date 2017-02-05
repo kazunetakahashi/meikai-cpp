@@ -7,6 +7,12 @@
 
 using namespace std;
 
+int Date::dmax[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+int Date::days_of_month(int y, int m) {
+  return dmax[m-1] + (leap_year(y) && m == 2);
+}
+
 Date::Date(int y, int m, int d) {
   this->y = y;
   this->m = m;
@@ -20,23 +26,41 @@ Date::Date() {
   m = local->tm_mon + 1;
   d = local->tm_mday;
 }
-  
+
+int Date::day_of_year() const {
+  int days = d;
+  for (auto i = 0; i < m; ++i) {
+    days += days_of_month(y, i);
+  }
+  return days;
+}
 
 Date Date::preceding_day() const {
-  int dmax[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  int y = this->y;
-  int m = this->m;
-  int d = this->d;  
-  if (d > 1) {
-    d--;
+  Date temp = *this;
+  if (temp.d > 1) {
+    temp.d--;
   } else {
-    if (--m < 1) {
-      y--;
-      m = 12;
+    if (--temp.m < 1) {
+      temp.y--;
+      temp.m = 12;
     }
-    d = dmax[m - 1];
+    temp.d = days_of_month(temp.y, temp.m);
   }
-  return Date(y, m, d);
+  return temp;
+}
+
+Date Date::following_day() const {
+  Date temp = *this;
+  if (temp.d < days_of_month(temp.y, temp.m)) {
+    temp.d++;
+  } else {
+    if (++temp.m > 1) {
+      temp.y++;
+      temp.m = 1;
+    }
+    temp.d = 1;
+  }
+  return temp;
 }
 
 string Date::to_string() const {
