@@ -1,3 +1,8 @@
+### https://raw.github.com/github/gitignore/f57304e9762876ae4c9b02867ed0cb887316387e/C++.gitignore
+
+# Prerequisites
+*.d
+
 # Compiled Object files
 *.slo
 *.lo
@@ -28,8 +33,11 @@
 *.out
 *.app
 
+
+
+### ignored files in my environment ###
+
 # Ignore other unneeded files.
-doc/
 *.swp
 .project
 .DS_Store
@@ -40,3 +48,13 @@ doc/
 \#*\#
 .\#*
 *~
+._*
+*_flymake.*
+
+# Ignore given input/output files in contests.
+*.in
+*.out
+
+# Ignore VSCode LaTeX Workshop's temp file.
+__latexindent_temp.tex
+.vscode/*
